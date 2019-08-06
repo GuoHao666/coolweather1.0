@@ -36,7 +36,7 @@ public class Utility {
     /**
      * 解析和出处理服务器返回的市级数据
      */
-    public static boolean handleCityResponse(String response) {
+    public static boolean handleCityResponse(String response,int provinceId) {
         if (!TextUtils.isEmpty(response)) {
             try {
                 JSONArray allCities = new JSONArray(response);

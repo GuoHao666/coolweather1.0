@@ -81,7 +81,7 @@ public class ChooseAreaFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,6 +93,7 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity=cityList.get(position);
                     queryCounties();
                 }
+                queryProvinces();
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +145,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel=LEVEL_CITY;
         }else {
             int provinceCode=selectedProvince.getProvinceCode();
-            String address="http://guolin.tech/api/china"+provinceCode;
+            String address="http://guolin.tech/api/china/"+provinceCode;
             queryFromServer(address,"city");
         }
     }
@@ -167,7 +168,7 @@ public class ChooseAreaFragment extends Fragment {
         }else {
             int provinceCode=selectedProvince.getProvinceCode();
             int cityCode=selectedCity.getCityCode();
-            String address="http://guolin.tech/api/china"+provinceCode+"/"+cityCode;
+            String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
             queryFromServer(address,"county");
         }
     }
@@ -175,7 +176,7 @@ public class ChooseAreaFragment extends Fragment {
      * 根据传入的地址和类型，从服务器上查询省市县的数据
      */
     private void queryFromServer(String address,final String type){
-        showProcessDiaog();
+        showProcessDialog();
         HttpUtil.sendOkhttpRequset(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -222,7 +223,7 @@ public class ChooseAreaFragment extends Fragment {
     /**
      * 显示进度对话框
      */
-    private void showProcessDiaog(){
+    private void showProcessDialog(){
         if (progressDialog==null){
             progressDialog =new ProgressDialog(getActivity());
             progressDialog.setMessage("正在加载中...");
